@@ -13,7 +13,9 @@ pio.templates.default = "plotly_white"
 # Import data
 results = pd.read_csv("data/model_results.csv")
 
-app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+server = app.server
 
 
 def create_figure(product_value=25, A_cost=1, B_cost=0.5):
@@ -90,4 +92,4 @@ def remodel(prod_val, add1_cost, add2_cost):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
