@@ -57,25 +57,76 @@ def create_figure(product_value=25, A_cost=1, B_cost=0.5):
     fig.update_xaxes(title_text="Concentration A")
 
     fig.update_layout(
-        title_text="How do Additive Concentrations Affect Potential Profit?", height=600
+        title_text="How do Additive Concentrations Affect Potential Profit?",
+        height=500,
     )
     return fig
 
 
-app.layout = html.Div(
+app.layout = dbc.Container(
     children=[
-        html.Div(
-            children="""
-        Use the sliders to explore how product cost and additive concentration affects profit margin:
-    """
+        dbc.Card(
+            children=[
+                html.H1(
+                    children="Interactive Techno-Economic Analysis",
+                    style={
+                        "marginTop": 15,
+                        "marginLeft": 15,
+                        "marginRight": 15,
+                    },
+                ),
+                html.Div(
+                    children="""
+            This is an interactive analysis that considers the impact of additive costs and product value on the potential for profit.  Profit values appear binned because this is built on top of a random forest model fit to (dummy) experimental data. This model predicts yield given A and B concentrations during fermentation. Use the sliders to explore how product cost and additive concentration affects profit margin:
+        """,
+                    style={
+                        "marginTop": 15,
+                        "marginLeft": 15,
+                        "marginRight": 15,
+                    },
+                ),
+            ],
+            style={"marginTop": 10, "marginBottom": 10},
         ),
-        dcc.Graph(id="results", figure=create_figure()),
-        html.Div(children="Product ($/g):", id="prod-val-label"),
-        dcc.Slider(0.5, 50, value=25, id="prod-val"),
-        html.Div(children="Additive A Cost ($/g):", id="add1-cost-label"),
-        dcc.Slider(0.25, 25, value=2.5, id="add1-cost"),
-        html.Div(children="Additive B Cost ($/g):", id="add2-cost-label"),
-        dcc.Slider(0.25, 25, value=2.5, id="add2-cost"),
+        dbc.Card(
+            children=[
+                dcc.Graph(id="results", figure=create_figure()),
+                html.Div(
+                    children=[
+                        "Product ($/g):",
+                        dcc.Slider(0.5, 50, value=25, id="prod-val"),
+                    ],
+                    id="prod-val-label",
+                    style={
+                        "marginLeft": 15,
+                        "marginRight": 15,
+                    },
+                ),
+                html.Div(
+                    children=[
+                        "Additive A Cost ($/g):",
+                        dcc.Slider(0.25, 25, value=2.5, id="add1-cost"),
+                    ],
+                    id="add1-cost-label",
+                    style={
+                        "marginLeft": 15,
+                        "marginRight": 15,
+                    },
+                ),
+                html.Div(
+                    children=[
+                        "Additive B Cost ($/g):",
+                        dcc.Slider(0.25, 25, value=2.5, id="add2-cost"),
+                    ],
+                    id="add2-cost-label",
+                    style={
+                        "marginLeft": 15,
+                        "marginRight": 15,
+                    },
+                ),
+            ],
+            style={"marginTop": 10, "marginBottom": 10},
+        ),
     ]
 )
 
@@ -92,4 +143,4 @@ def remodel(prod_val, add1_cost, add2_cost):
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
